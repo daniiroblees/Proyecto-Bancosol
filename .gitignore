@@ -1,0 +1,36 @@
+### --- SECRETOS Y SEGURIDAD (MUY IMPORTANTE) ---
+# Ignoramos archivos que puedan contener contraseñas
+.env
+.env.local
+.env.*.local
+
+### --- JAVA / MAVEN ---
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+### --- INTELLIJ IDEA ---
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+# Si quieres compartir la configuración de ejecución de IntelliJ, comenta la línea de abajo
+# .idea/runConfigurations/
+
+### --- VS CODE ---
+.vscode/
+*.code-workspace
+
+### --- SISTEMA OPERATIVO ---
+.DS_Store
+Thumbs.db
+desktop.ini
+src/main/resources/application.properties
+### --- TEMPORALES ---
+temp/
+tmp/
