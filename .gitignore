@@ -1,9 +1,3 @@
-### --- SECRETOS Y SEGURIDAD (MUY IMPORTANTE) ---
-# Ignoramos archivos que puedan contener contraseñas
-.env
-.env.local
-.env.*.local
-
 ### --- JAVA / MAVEN ---
 target/
 !.mvn/wrapper/maven-wrapper.jar

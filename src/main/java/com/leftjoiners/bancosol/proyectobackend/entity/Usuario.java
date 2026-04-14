@@ -28,7 +28,7 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "id_entidad")
-    private EntidadInstitucional entidad;
+    private Entidad entidad;
 
     @ManyToOne
     @JoinColumn(name = "id_zona_asignada")
