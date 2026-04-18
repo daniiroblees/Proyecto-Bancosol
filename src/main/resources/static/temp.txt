@@ -1,1 +1,0 @@
-Archivo para que github cree la carpeta, borrar cuando se añada algo en esta carpeta.

@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
     @GetMapping("/")
     public String doInit(Model model) {
-        return "auth";
+        return "voluntarios";
     }
 }
