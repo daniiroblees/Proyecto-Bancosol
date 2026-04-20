@@ -58,16 +58,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
         <div id="volunteer-schedule">
           <label for="volunteer-1">
-            <input type="checkbox" id="volunteer-1" name="schedule" value="viernes_manana" />
+            <input type="radio" id="volunteer-1" name="schedule" value="viernes_manana" />
             Viernes mañana
           </label>
           <label for="volunteer-2">
-            <input type="checkbox" id="volunteer-2" name="schedule" value="sabado_manana" />
-            Sabado Mañana
+            <input type="radio" id="volunteer-2" name="schedule" value="viernes_tarde" />
+            Viernes Tarde
           </label>
           <label for="volunteer-3">
-            <input type="checkbox" id="volunteer-3" name="schedule" value="sabado_tarde" />
-            Sabado tarde
+            <input type="radio" id="volunteer-3" name="schedule" value="sabado_manana" />
+            Sabado Mañana
+          </label>
+          <label for="volunteer-4">
+            <input type="radio" id="volunteer-4" name="schedule" value="sabado_tarde" />
+            Sabado Tarde
           </label>
         </div>
         <div id="volunteer-info">
