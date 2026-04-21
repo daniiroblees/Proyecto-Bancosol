@@ -10,15 +10,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
   </head>
   <body>
   <%
-    List<TiendaCampanya> tiendas = (List<TiendaCampanya>) request.getAttribute("tiendaCampanyas");
-    List<VistaAsignacionColaboradores> tiendass = (List<VistaAsignacionColaboradores>) request.getAttribute("asignacionColaboradores");
+    List<VistaAsignacionColaboradores> tiendas = (List<VistaAsignacionColaboradores>) request.getAttribute("asignacionColaboradores");
 
 
   %>
     <h1>Asignación de voluntarios</h1>
   <main>
-
-
     <table>
       <thead>
         <tr>
@@ -34,9 +31,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </thead>
       <tbody id="table-body">
       <%
-        for(VistaAsignacionColaboradores tienda: tiendass ) {
+        for(VistaAsignacionColaboradores tienda: tiendas ) {
       %>
-        <tr data-id="<%= tienda.getIdTiendaCampanya() %>">
+        <tr data-id="<%= tienda.getIdTiendaCampanya() %>" data-li="<%= tienda.getLineales()%>">
           <td><%= tienda.getTienda() %></td>
           <td><%= tienda.getDomicilio() %> </td>
           <td><%= tienda.getLocalidad() %></td>
@@ -75,9 +72,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
     const infoContainer = document.querySelector("#info-container");
+    infoContainer.innerHTML = "";
 
     let id;
+    let lineales = 1;
+    let linealActual = 1;
     let turno = 1;
+
 
     function fetchTurnoData() {
       if (!id) return;
@@ -85,6 +86,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
       const params = new URLSearchParams();
       params.append("id", id);
       params.append("turno", turno);
+      params.append("lineales", lineales);
+      params.append("linealActual", linealActual);
+
 
       fetch("/buscarTurno", {
         method: "POST",
@@ -109,17 +113,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
 		const row = e.target.closest("tr");
 		if (!row) return; // Se ha pinchado en otro lado
 
-        // Cambiamos el id de la tienda
+        // Cambiamos el id y los lineales de la tienda
         id = row.dataset.id;
+        lineales = row.dataset.li;
 
-        // Ponemos como turno por defecto el Viernes por la mañana
+        // Ponemos como turno por defecto el Viernes por la mañana y el lineal 1
         turno = 1;
+        linealActual = 1;
 
 		// Limpiamos la clase selected de las otras filas
 		table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
 
 		// Se la metemos a la clase seleccionada
 		row.classList.add("selected");
+
 
         // Hacemos la petición para obtener los datos de la tienda y el turno 1
         fetchTurnoData();
@@ -134,6 +141,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
     });
 
+    infoContainer.addEventListener("change", (e) => {
+      if (e.target.name === "lineal") {
+        linealActual = e.target.value;
+        fetchTurnoData(); // Volvemos a pedir los datos con el nuevo turno
+      }
+    })
+
     // Delegación de eventos para el botón de cancelar
     infoContainer.addEventListener("click", (e) => {
       if (e.target.id === "cancel-button") {
@@ -141,9 +155,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
         const form = document.querySelector("#volunteer-container");
         if (form) form.style.visibility = 'hidden';
-
+        infoContainer.innerHTML = "";
         turno = 1;
         id = null;
+        lineales = 1;
         table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
       }
     });

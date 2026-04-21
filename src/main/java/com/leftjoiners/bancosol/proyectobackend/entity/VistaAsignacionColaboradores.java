@@ -32,6 +32,8 @@ public class VistaAsignacionColaboradores {
 
     private String capitan;
 
+    private Integer lineales;
+
     @Column(name = "viernes_manana")
     private String viernesManana;
 

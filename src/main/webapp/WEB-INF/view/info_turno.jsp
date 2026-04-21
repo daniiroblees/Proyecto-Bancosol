@@ -13,17 +13,18 @@
     }
 
     Integer turno = (Integer) request.getAttribute("turno");
-
+    Integer lineales = (Integer) request.getAttribute("lineales");
+    Integer linealActual = (Integer) request.getAttribute("linealActual");
     TiendaCampanya tienda = (TiendaCampanya) request.getAttribute("tienda");
     List<AsignacionTurno> turnos = tienda.getTurnos();
-    AsignacionTurno asignacionTurno = turnos.stream().filter(t -> t.getTipoTurno().getId().equals(turno)).findFirst().orElse(null);
-
-    if (asignacionTurno == null) {
-%>
-    <jsp:include page="info_turno_placeholder.jsp"/>
-<%
-        return;
+    AsignacionTurno asignacionTurno;
+    if (lineales > 1) {
+        asignacionTurno = turnos.stream().filter(t -> t.getTipoTurno().getId().equals(turno) && t.getLineal().equals(linealActual)).findFirst().orElse(null);
+    } else {
+        asignacionTurno = turnos.stream().filter(t -> t.getTipoTurno().getId().equals(turno)).findFirst().orElse(null);
     }
+
+
 %>
 <div id="volunteer-container">
     <div id="volunteer-localization">
@@ -33,7 +34,7 @@
     <div id="volunteer-schedule">
         <label for="viernes_manana">
             <input type="radio" id="viernes_manana" name="schedule" value="1" <%= turno == 1 ? "checked" : "" %> />
-            Viernes mañana
+            Viernes Mañana
         </label>
         <label for="viernes_tarde">
             <input type="radio" id="viernes_tarde" name="schedule" value="2" <%= turno == 2 ? "checked" : "" %> />
@@ -48,7 +49,29 @@
             Sabado Tarde
         </label>
     </div>
+    <%
+        if (lineales > 1) {
+    %>
+
+    <div id="volunteer-lineal">
+        <%
+            for (int i = 1; i <= lineales; i++) {
+        %>
+        <label for="L<%= i %>">
+            <input type="radio" id="L<%= i %>" name="lineal" value="<%=i%>" <%= linealActual == i ? "checked" : "" %> />
+            L<%=i%>
+        </label>
+        <%
+            }
+        %>
+    </div>
+
+    <%
+
+        }
+    %>
     <div id="volunteer-info">
+        <% if (asignacionTurno != null) { %>
         <div id="volunteer-name">
             <div>
                 <p id="lbl-capitan"><%= asignacionTurno.getColaborador().getNombre()%></p>
@@ -65,10 +88,29 @@
         <div id="volunteer-observations">
             <p><%= asignacionTurno.getObservaciones()%></p>
         </div>
+        <% } else { %>
+        <!-- Mostrar estado "vacante" si el turno no existe aún -->
+        <div id="volunteer-name">
+            <div>
+                <p id="lbl-capitan" style="color: gray; font-style: italic;">Sin asignar</p>
+            </div>
+            <div class="volunteer-date">
+                <div>COMIENZO</div>
+                <div>--:--</div>
+            </div>
+            <div class="volunteer-date">
+                <div>FIN</div>
+                <div>--:--</div>
+            </div>
+        </div>
+        <div id="volunteer-observations">
+            <p style="color: gray; font-style: italic;">No hay información para este turno.</p>
+        </div>
+        <% } %>
     </div>
 </div>
 <div id="button-container">
-    <button id="save-button">Guardar</button>
+    <button id="create-button"><%=asignacionTurno == null ? "Crear" : "Editar"%></button>
     <button id="cancel-button">Cancelar</button>
     <button id="export-button">Exportar</button>
 </div>

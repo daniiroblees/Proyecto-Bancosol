@@ -13,8 +13,8 @@
     </div>
     <div id="volunteer-schedule">
         <label for="viernes_manana">
-            <input type="radio" id="viernes_manana" name="schedule" value="1" checked />
-            Viernes mañana
+            <input type="radio" id="viernes_manana" name="schedule" value="1" />
+            Viernes Mañana
         </label>
         <label for="viernes_tarde">
             <input type="radio" id="viernes_tarde" name="schedule" value="2"/>
@@ -49,7 +49,7 @@
     </div>
 </div>
 <div id="button-container">
-    <button id="save-button">Guardar</button>
+    <button id="create-button">Crear</button>
     <button id="cancel-button">Cancelar</button>
     <button id="export-button">Exportar</button>
 </div>

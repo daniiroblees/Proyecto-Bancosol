@@ -23,10 +23,8 @@ public class AsignacionColaboradoresController {
 
     @GetMapping("/")
     public String doInit(Model model) {
-        List<TiendaCampanya> tiendaCampanyas = tiendaCampanyaRepository.findAll();
         List<VistaAsignacionColaboradores> asignacionColaboradores = asignacionColaboradoresRepository.findAll();
 
-        model.addAttribute("tiendaCampanyas", tiendaCampanyas);
         model.addAttribute("asignacionColaboradores", asignacionColaboradores);
         return "voluntarios";
     }
@@ -34,11 +32,15 @@ public class AsignacionColaboradoresController {
     @PostMapping("/buscarTurno")
     public String buscarTurno(@RequestParam(value = "id", required = false) Integer id,
                               @RequestParam(value = "turno", required = false) Integer turno,
+                              @RequestParam(value = "lineales", required = false) Integer lineales,
+                              @RequestParam(value = "linealActual", required = false) Integer linealActual,
                               Model model) {
         TiendaCampanya tiendaCampanya = tiendaCampanyaRepository.findById(id).orElse(null);
 
         model.addAttribute("id", id);
         model.addAttribute("turno", turno);
+        model.addAttribute("lineales", lineales);
+        model.addAttribute("linealActual", linealActual);
         model.addAttribute("tienda", tiendaCampanya);
         return "info_turno";
     }
