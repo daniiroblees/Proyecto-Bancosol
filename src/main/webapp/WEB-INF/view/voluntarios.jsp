@@ -76,12 +76,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
 	const form = document.querySelector("#volunteer-container");
     const infoContainer = document.querySelector("#info-container");
 
-
-    const lblTienda = document.getElementById('lbl-tienda');
-    const lblDomicilio = document.getElementById('lbl-domicilio');
-    const lblCapitan = document.getElementById('lbl-capitan');
-    const lblObs = document.getElementById('lbl-obs');
-
     let id;
     let turno = 1;
 
