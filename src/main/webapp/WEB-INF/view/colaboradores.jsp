@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Colaborador" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: marin
   Date: 20/04/2026
@@ -12,86 +13,107 @@
     <link rel="stylesheet" href="/css/colaboradores.css" />
 </head>
 <body>
+    <%
+        List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
+    %>
     <h1>Colaboradores</h1>
     <main>
-        <table>
-            <thead>
-            <tr>
-                <th>Colaborador</th>
-                <th>Domicilio</th>
-                <th>Localidad</th>
-                <th>Colabora en</th>
-                <th>Coordinador</th>
-                <th>Contacto Principal</th>
-                <th>Observaciones</th>
-            </tr>
-            </thead>
-            <tdata>
+        <section class="display-fila">
+            <table>
+                <thead>
                 <tr>
-                    <td>Ayuntamiento de Málaga 1</td>
-                    <td>Direccion 1</td>
-                    <td>Ciudad 1</td>
-                    <td>Zona de colaboración 1</td>
-                    <td>Pepe perez 1</td>
-                    <td>000000001</td>
-                    <td>1 voluntarios de 1 horas a 2 horas</td>
+                    <th>Colaborador</th>
+                    <th>Domicilio</th>
+                    <th>Localidad</th>
+                    <th>Colabora en</th>
+                    <th>Coordinador</th>
+                    <th>Contacto Principal</th>
+                    <th>Observaciones</th>
+                </tr>
+                </thead>
+                <tdata>
+                    <%
+                        for (Colaborador colaborador : colaboradores) {
+
+                    %>
+                    <tr>
+                        <td><%=colaborador.getNombre()%></td>
+                        <td><%=colaborador.getDomicilio()%></td>
+                        <td><%=colaborador.getLocalidadSede().getNombre()%></td>
+                        <td><%=colaborador.getColaboraEn().getNombre()%></td>
+                        <td><%=colaborador.getCoordinador().getNombre()%></td>
+                        <td><%=colaborador.getContactoPrincipal()%></td>
+                        <td><%=colaborador.getObservaciones()%></td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </tdata>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">Colaborador seleccionado</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>COLABORADOR</td>
+                    <td colspan="2">Ayuntamiento de Málaga 1</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 2</td>
-                    <td>Direccion 2</td>
-                    <td>Ciudad 2</td>
-                    <td>Zona de colaboración 2</td>
-                    <td>Pepe perez 2</td>
-                    <td>000000002</td>
-                    <td>2 voluntarios de 2 horas a 3 horas</td>
+                    <td>DOMICILIO</td>
+                    <td colspan="2">Dirección 1</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 3</td>
-                    <td>Direccion 3</td>
-                    <td>Ciudad 3</td>
-                    <td>Zona de colaboración 3</td>
-                    <td>Pepe perez 3</td>
-                    <td>000000003</td>
-                    <td>3 voluntarios de 3 horas a 4 horas</td>
+                    <td>CP-LOCALIDAD</td>
+                    <td>00000</td>
+                    <td>Málaga</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 4</td>
-                    <td>Direccion 4</td>
-                    <td>Ciudad 4</td>
-                    <td>Zona de colaboración 4</td>
-                    <td>Pepe perez 4</td>
-                    <td>000000004</td>
-                    <td>4 voluntarios de 4 horas a 5 horas</td>
+                    <td>COLABORA EN</td>
+                    <td colspan="2">Málaga</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 5</td>
-                    <td>Direccion 5</td>
-                    <td>Ciudad 5</td>
-                    <td>Zona de colaboración 5</td>
-                    <td>Pepe perez 5</td>
-                    <td>000000005</td>
-                    <td>5 voluntarios de 5 horas a 6 horas</td>
+                    <td rowspan="3"> CONTACTO 1</td>
+                    <td>Nombre</td>
+                    <td>Pepe Perez 1</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 6</td>
-                    <td>Direccion 6</td>
-                    <td>Ciudad 6</td>
-                    <td>Zona de colaboración 6</td>
-                    <td>Pepe perez 6</td>
-                    <td>000000006</td>
-                    <td>6 voluntarios de 6 horas a 7 horas</td>
+                    <td>Email</td>
+                    <td>correopepe@correo.com</td>
                 </tr>
                 <tr>
-                    <td>Ayuntamiento de Málaga 7</td>
-                    <td>Direccion 7</td>
-                    <td>Ciudad 7</td>
-                    <td>Zona de colaboración 7</td>
-                    <td>Pepe perez 7</td>
-                    <td>000000007</td>
-                    <td>7 voluntarios de 7 horas a 8 horas</td>
+                    <td>Teléfono</td>
+                    <td>111111111</td>
                 </tr>
-            </tdata>
-        </table>
+                <tr>
+                    <td rowspan="3"> CONTACTO 2</td>
+                    <td>Nombre</td>
+                    <td>Pepe Perez 2</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>correopepe2@correo.com</td>
+                </tr>
+                <tr>
+                    <td>Teléfono</td>
+                    <td>222222222</td>
+                </tr>
+                <tr>
+                    <td rowspan="3"> CONTACTO 3</td>
+                    <td>Nombre</td>
+                    <td>Pepe Perez 3</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>correopepe3@correo.com</td>
+                </tr>
+                <tr>
+                    <td>Teléfono</td>
+                    <td>333333333</td>
+                </tr>
+            </table>
+        </section>
     </main>
 </body>
 </html>
