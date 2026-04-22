@@ -4,6 +4,8 @@ import com.leftjoiners.bancosol.proyectobackend.dao.AsignacionColaboradoresRepos
 import com.leftjoiners.bancosol.proyectobackend.dao.TiendaCampanyaRepository;
 import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya;
 import com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores;
+import com.leftjoiners.bancosol.proyectobackend.dao.TiendaRepository;
+import com.leftjoiners.bancosol.proyectobackend.entity.Tienda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,10 @@ public class AsignacionColaboradoresController {
 
     @Autowired
     protected AsignacionColaboradoresRepository asignacionColaboradoresRepository;
+
+    @Autowired
+    protected TiendaRepository tiendaRepository;
+
 
     @GetMapping("/")
     public String doInit(Model model) {
@@ -43,5 +49,13 @@ public class AsignacionColaboradoresController {
         model.addAttribute("linealActual", linealActual);
         model.addAttribute("tienda", tiendaCampanya);
         return "info_turno";
+    }
+
+    @GetMapping("/tiendas")
+    public String doTiendas(Model model) {
+        List<Tienda> tiendas = tiendaRepository.findAll();
+
+        model.addAttribute("tiendas", tiendas);
+        return "tiendas";
     }
 }
