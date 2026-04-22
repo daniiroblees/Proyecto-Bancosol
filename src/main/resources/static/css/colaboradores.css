@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&display=swap');
+
+* {
+    font-family: 'Public Sans', sans-serif;
+    border-collapse: collapse;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Evita el scroll doble */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 10px;
+}
+
+th {
+    text-transform: uppercase;
+    color: white;
+    background: #4472c4;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 12px;
+}
+
+td {
+    text-align: left;
+}
+
+.selected td:first-child{
+    background-color: #a9d18e;
+}
+
+/* Volunteer Info Container */
+#volunteer-container {
+    align-items: stretch;
+    border: 1px solid black;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    flex: 4;
+    visibility: hidden;
+}
+
+#volunteer-localization {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+#volunteer-localization div {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#volunteer-localization div:first-child {
+    background-color: #a9d18e;
+}
+
+#volunteer-schedule {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1;
+    min-width: 150px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#volunteer-schedule label {
+    margin-top: 5px;
+}
+
+
+#volunteer-info {
+    flex: 3; /* Toma el triple de espacio que la localización */
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+}
+
+#volunteer-name {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+#volunteer-name > div:first-child {
+    flex: 5;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+
+
+.volunteer-date {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.volunteer-date div {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+
+
+#volunteer-observations {
+    padding: 10px;
+    border: 1px solid black;
+    flex: 1;
+}
+
+
+/* Info Container (Bottom Section) */
+
+#info-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+}
+
+#button-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#button-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #4472c4;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+#button-container button:active {
+    background-color: #203c5e;
+
+}
