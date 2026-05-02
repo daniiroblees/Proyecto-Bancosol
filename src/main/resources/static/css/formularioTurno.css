@@ -1,38 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&display=swap');
-
-/* Evitar que el overflow: hidden de voluntarios.css nos corte la página */
-body.formulario-turno-page {
-    height: auto !important;
-    overflow-y: auto !important;
-    display: block !important;
-    background-color: #f4f6f8;
-}
-
-/* Cabecera principal */
-.form-turno-header {
-    padding: 20px 30px;
-    margin: 0;
-    color: #203c5e;
-    border-bottom: 2px solid #e2e8f0;
-    background-color: white;
-}
-
-/* Contenedor principal de dos columnas */
-.layout-split {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    padding: 30px;
-    align-items: flex-start;
-}
-
-/* =========================================
-   PARTE IZQUIERDA: ESTILOS DEL FORMULARIO
-   ========================================= */
 .form-turno {
     flex: 1;
     max-width: 50%;
     background-color: #ffffff;
+    margin: 30px;
     padding: 25px;
     border-radius: 8px;
     border: 1px solid #cbd5e0;
@@ -42,20 +12,21 @@ body.formulario-turno-page {
 /* Ficha de la info inmutable del turno */
 .turno-info {
     background: #e9ecef;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 6px;
-    margin-bottom: 25px;
-    border-left: 4px solid #4472c4;
+    margin-bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.turno-info p {
-    margin: 5px 0;
-    color: #2d3748;
-    font-size: 0.95rem;
-}
-
-.turno-info strong {
-    color: #1a202c;
+/* Filas para el justify-between */
+.turno-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 /* Estructura de los campos */
@@ -68,6 +39,7 @@ body.formulario-turno-page {
     gap: 15px;
 }
 
+/* Para que los inputs que están en fila crezcan */
 .form-group-row .form-group {
     flex: 1;
 }
@@ -106,71 +78,19 @@ body.formulario-turno-page {
 
 /* Botón de envío */
 .btn-submit {
-    background-color: #4472c4 !important;
-    color: white !important;
+    background-color: #4472c4;
+    color: white;
     font-weight: bold;
-    padding: 12px 20px !important;
-    border: none !important;
-    border-radius: 5px !important;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     width: 100%;
     margin-top: 10px;
-    font-size: 1.05rem !important;
+    font-size: 1.05rem;
     transition: background-color 0.2s;
 }
 
 .btn-submit:hover {
-    background-color: #203c5e !important;
-}
-
-/* =========================================
-   PARTE DERECHA: PANEL DE COLABORADORES
-   ========================================= */
-.colaborador-panel {
-    flex: 1;
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #cbd5e0;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    min-width: 0; /* Previene que la tabla de la derecha rompa el layout flex */
-}
-
-/* Reajustar la tabla interior de info_colaboradores por si es muy grande */
-.colaborador-panel table {
-    width: 100%;
-}
-
-
-.turno-info {
-    background: #e9ecef;
-    padding: 15px 20px;
-    border-radius: 6px;
-    margin-bottom: 25px;
-    border-left: 4px solid #4472c4;
-
-    /* Layout interno */
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Espacio entre la fila de arriba y la de abajo */
-}
-
-/* Filas para el justify-between */
-.turno-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-/* Quitamos cualquier negrita y ajustamos el color */
-.turno-info-row span {
-    font-weight: 400 !important; /* Forzamos peso normal */
-    color: #2d3748;
-    font-size: 0.95rem;
-}
-
-/* Aseguramos que no haya strongs residuales si se colara alguno */
-.turno-info strong {
-    font-weight: 400 !important;
+    background-color: #203c5e;
 }

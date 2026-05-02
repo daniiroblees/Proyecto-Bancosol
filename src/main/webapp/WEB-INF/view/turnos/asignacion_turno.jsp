@@ -4,35 +4,40 @@
 change this template use File | Settings | File Templates. --%> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>Title</title>
-    <link rel="stylesheet" href="/css/voluntarios.css" />
-  </head>
-  <body>
+<head>
+  <title>Asignación</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/asignacion_turno.css" />
+</head>
+<body>
   <%
     List<VistaAsignacionColaboradores> tiendas = (List<VistaAsignacionColaboradores>) request.getAttribute("asignacionColaboradores");
   %>
-    <h1>Asignación de voluntarios</h1>
-  <main>
-    <table>
-      <thead>
+<jsp:include page="../shared/navbar.jsp"/>
+
+<div class="page-wrapper">
+
+  <div class="left-column">
+
+
+    <div class="table-container card">
+      <table>
+        <thead>
         <tr>
           <th>Tienda</th>
           <th>Domicilio</th>
           <th>Localidad</th>
-          <th>Capitan</th>
-          <th>Viernes Mañana</th>
-          <th>Viernes Tarde</th>
-          <th>Sabado Mañana</th>
-          <th>Sabado Tarde</th>
+          <th>Capitán</th>
+          <th>Viernes M.</th>
+          <th>Viernes T.</th>
+          <th>Sábado M.</th>
+          <th>Sábado T.</th>
         </tr>
-      </thead>
-      <tbody id="table-body">
-      <%
-        for(VistaAsignacionColaboradores tienda: tiendas ) {
-      %>
+        </thead>
+        <tbody id="table-body">
+        <% for(VistaAsignacionColaboradores tienda: tiendas ) { %>
         <tr data-id="<%= tienda.getIdTiendaCampanya() %>" data-li="<%= tienda.getLineales()%>">
-          <td><%= tienda.getTienda() %></td>
+          <td class="font-medium text-blue"><%= tienda.getTienda() %></td>
           <td><%= tienda.getDomicilio() %> </td>
           <td><%= tienda.getLocalidad() %></td>
           <td><%= tienda.getCapitan() %> </td>
@@ -41,35 +46,23 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <td class="small-td"><%= tienda.getSabadoManana() != null ? tienda.getSabadoManana().replaceAll("\\s+(L\\d+)", "<br>$1") : ""  %></td>
           <td class="small-td"><%= tienda.getSabadoTarde() != null ? tienda.getSabadoTarde().replaceAll("\\s+(L\\d+)", "<br>$1") : "" %></td>
         </tr>
-      <%
-        }
-      %>
-      </tbody>
-    </table>
-  </main>
-    <div id="info-container">
-      <jsp:include page="info_turno.jsp" />
+        <% } %>
+        </tbody>
+      </table>
     </div>
-  </body>
+  </div>
+
+  <div class="right-column">
+    <div id="info-container" class="card side-panel">
+    </div>
+  </div>
+
+</div>
   <script>
-    /*
-	// Simulación de datos para llenar la tabla
-    const trOriginal = document.querySelector("#table-body tr");
-    for (let i = 0; i < 5; i++) {
-        let clonedRow = trOriginal.cloneNode(true);
-        let cells = clonedRow.querySelectorAll("td");
-        cells[0].innerText = "Tienda " + i;
-        cells[1].innerText = "Domicilio " + i;
-        cells[2].innerText = "Localidad " + i;
-        cells[3].innerText = "Capitan " + i;
-        cells[8].innerText = "Observaciones " + i;
-        trOriginal.parentNode.appendChild(clonedRow);
-    }
-	trOriginal.parentNode.removeChild(trOriginal);
-    */
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
     const infoContainer = document.querySelector("#info-container");
+    const rightColumn = document.querySelector(".right-column");
     infoContainer.innerHTML = "";
 
     let id;
@@ -88,7 +81,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       params.append("linealActual", linealActual);
 
 
-      fetch("/buscarTurno", {
+      fetch("/turnos/buscarTurno", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -111,6 +104,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
 		const row = e.target.closest("tr");
 		if (!row) return; // Se ha pinchado en otro lado
 
+        if (row.classList.contains("selected")) {
+          row.classList.remove("selected");
+          rightColumn.classList.remove("open");
+          id = null;
+          return;
+        }
+
         // Cambiamos el id y los lineales de la tienda
         id = row.dataset.id;
         lineales = row.dataset.li;
@@ -125,6 +125,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 		// Se la metemos a la clase seleccionada
 		row.classList.add("selected");
 
+        rightColumn.classList.add("open");
 
         // Hacemos la petición para obtener los datos de la tienda y el turno 1
         fetchTurnoData();
@@ -149,7 +150,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
     // Delegación de eventos para el botón de cancelar
     infoContainer.addEventListener("click", (e) => {
       if (e.target.id === "create-button") {
-        console.log("Botón pulsado. ID:", id, "Turno:", turno, "Lineal:", linealActual);
 
         if (id && turno && linealActual) {
           const params = new URLSearchParams();
@@ -158,7 +158,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           params.append("lineal", linealActual);
 
           // Usamos backticks (`) para que la variable se evalúe correctamente
-          window.location.href = `/crearTurno?\${params.toString()}`;
+          window.location.href = `/turnos/crearTurno?\${params.toString()}`;
         } else {
           console.error("Faltan datos para navegar");
         }
@@ -167,9 +167,14 @@ contentType="text/html;charset=UTF-8" language="java" %>
       if (e.target.id === "cancel-button") {
         e.preventDefault();
 
-        const form = document.querySelector("#volunteer-container");
-        if (form) form.style.visibility = 'hidden';
-        infoContainer.innerHTML = "";
+        rightColumn.classList.remove("open");
+
+        // Retrasamos un poquito el borrado del contenido para que no desaparezca a mitad de la animación
+        setTimeout(() => {
+          infoContainer.innerHTML = "";
+        }, 300);
+
+        // Limpiamos los datos
         turno = 1;
         id = null;
         lineales = 1;
@@ -177,4 +182,5 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
     });
   </script>
+</body>
 </html>

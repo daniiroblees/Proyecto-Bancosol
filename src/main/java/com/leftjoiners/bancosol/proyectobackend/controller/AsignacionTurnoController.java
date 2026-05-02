@@ -9,13 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalTime;
 import java.util.List;
 
 @Controller
-public class AsignacionColaboradoresController {
+@RequestMapping("/turnos")
+public class AsignacionTurnoController {
     @Autowired
     protected TiendaCampanyaRepository tiendaCampanyaRepository;
 
@@ -31,12 +33,13 @@ public class AsignacionColaboradoresController {
     @Autowired
     protected AsignacionTurnoRepository asignacionTurnoRepository;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String doInit(Model model) {
         List<VistaAsignacionColaboradores> asignacionColaboradores = asignacionColaboradoresRepository.findAll();
 
         model.addAttribute("asignacionColaboradores", asignacionColaboradores);
-        return "voluntarios";
+        model.addAttribute("currentSection", "turnos");
+        return "turnos/asignacion_turno";
     }
 
     @PostMapping("/buscarTurno")
@@ -46,13 +49,16 @@ public class AsignacionColaboradoresController {
                               @RequestParam(value = "linealActual", required = false) Integer linealActual,
                               Model model) {
         TiendaCampanya tiendaCampanya = tiendaCampanyaRepository.findById(id).orElse(null);
+        AsignacionTurno asignacionTurno = this.asignacionTurnoRepository.buscarTurnoEspecifico(id, turno, linealActual).orElse(null);
 
         model.addAttribute("id", id);
         model.addAttribute("turno", turno);
         model.addAttribute("lineales", lineales);
         model.addAttribute("linealActual", linealActual);
         model.addAttribute("tienda", tiendaCampanya);
-        return "info_turno";
+        model.addAttribute("asignacionTurno", asignacionTurno);
+
+        return "turnos/info_turno";
     }
 
     @GetMapping("/crearTurno")
@@ -60,22 +66,8 @@ public class AsignacionColaboradoresController {
                               @RequestParam(value = "turno", required = false) Integer turno,
                               @RequestParam(value = "lineal", required = false) Integer lineal,
                               Model model) {
-        TiendaCampanya tienda = null;
-        AsignacionTurno asignacionTurno = null;
-
-        // Buscamos la tienda si nos pasan un ID
-        if (id != null) {
-            tienda = tiendaCampanyaRepository.findById(id).orElse(null);
-        }
-
-        if (tienda != null && tienda.getTurnos() != null) {
-            asignacionTurno = tienda.getTurnos().stream()
-                    .filter(t -> t.getTipoTurno() != null
-                            && t.getTipoTurno().getId().equals(turno)
-                            && (lineal == null || lineal.equals(t.getLineal())))
-                    .findFirst()
-                    .orElse(null);
-        }
+        TiendaCampanya tienda = tiendaCampanyaRepository.findById(id).orElse(null);;
+        AsignacionTurno asignacionTurno = this.asignacionTurnoRepository.buscarTurnoEspecifico(id, turno, lineal).orElse(null);
 
         if (asignacionTurno == null) {
             asignacionTurno = new AsignacionTurno();
@@ -86,7 +78,8 @@ public class AsignacionColaboradoresController {
 
         model.addAttribute("colaboradores", this.colaboradoresRespository.findAll());
         model.addAttribute("asignacionTurno", asignacionTurno);
-        return "formulario_turno";
+        model.addAttribute("currentSection", "turnos");
+        return "turnos/formulario_turno";
     }
 
     @PostMapping("/guardarTurno")
@@ -111,6 +104,6 @@ public class AsignacionColaboradoresController {
         asignacionTurno.setObservaciones(observaciones);
         this.asignacionTurnoRepository.save(asignacionTurno);
 
-        return "redirect:/";
+        return "redirect:/turnos";
     }
 }

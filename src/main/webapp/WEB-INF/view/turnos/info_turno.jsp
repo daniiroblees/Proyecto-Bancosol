@@ -4,25 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Integer id = (Integer) request.getAttribute("id");
-
-    if (id == null) {
-%>
-    <jsp:include page="info_turno_placeholder.jsp"/>
-<%
-        return; // Esto hace que el resto del JSP no se procese
-    }
-
     Integer turno = (Integer) request.getAttribute("turno");
     Integer lineales = (Integer) request.getAttribute("lineales");
     Integer linealActual = (Integer) request.getAttribute("linealActual");
     TiendaCampanya tienda = (TiendaCampanya) request.getAttribute("tienda");
-    List<AsignacionTurno> turnos = tienda.getTurnos();
-    AsignacionTurno asignacionTurno;
-    if (lineales > 1) {
-        asignacionTurno = turnos.stream().filter(t -> t.getTipoTurno().getId().equals(turno) && t.getLineal().equals(linealActual)).findFirst().orElse(null);
-    } else {
-        asignacionTurno = turnos.stream().filter(t -> t.getTipoTurno().getId().equals(turno)).findFirst().orElse(null);
-    }
+    AsignacionTurno asignacionTurno = (AsignacionTurno) request.getAttribute("asignacionTurno");
 
 
 %>
