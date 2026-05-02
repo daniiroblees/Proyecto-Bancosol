@@ -39,6 +39,10 @@ td {
 	text-align: left;
 }
 
+.small-td {
+	font-size: 0.8rem;
+}
+
 .selected td:first-child{
 	background-color: #a9d18e;
 }

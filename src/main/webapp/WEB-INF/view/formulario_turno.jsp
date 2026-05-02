@@ -1,5 +1,7 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Tienda" %><%--
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Tienda" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Colaborador" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: javie
   Date: 22/04/2026
@@ -10,6 +12,8 @@
 <%
     AsignacionTurno asignacionTurno = (AsignacionTurno) request.getAttribute("asignacionTurno");
     Tienda tienda = asignacionTurno.getTiendaCampanya().getTienda();
+
+    List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
 %>
 <html>
 <head>
@@ -17,19 +21,28 @@
 </head>
 <body>
 <h1>Asignacion de Turno</h1>
-<p>Tienda que estoy editando: <%=tienda.getNombre()%> - <%=tienda.getDomicilio()%></p>
-<p>Tipo de turno: <%=asignacionTurno.getTipoTurno().getNombre()%></p>
-<p>Lineal a editar: <%=asignacionTurno.getLineal()%></p>
-<p>Id de asignación: <%= asignacionTurno.getId() != null ? asignacionTurno.getId()  : "No hay"%></p>
+
+<div>
 <form action="/guardarTurno" method="post">
+    <p><%= asignacionTurno.getId() != null ? "Editando turno existente"  : "Creando turno nuevo"%></p>
+    <p>Tienda: <%=tienda.getNombre()%> - <%=tienda.getDomicilio()%></p>
+    <p>Turno: <%=asignacionTurno.getTipoTurno().getNombre()%></p>
+    <p>Lineal: <%=asignacionTurno.getLineal()%></p>
+
+    <input type="hidden" value="<%=asignacionTurno.getId() != null ? asignacionTurno.getId() : ""%>" name="id">
+    <input type="hidden" value="<%=asignacionTurno.getTiendaCampanya().getId()%>" name="tiendaCampanyaId">
+    <input type="hidden" value="<%=asignacionTurno.getTipoTurno().getId()%>" name="tipoTurnoId">
+    <input type="hidden" value="<%=asignacionTurno.getLineal()%>" name="lineal">
     <p>
         <label for="input_colaboradores">Colaborador: </label>
-        <select id="input_colaboradores" name="colaborador">
-
+        <select id="input_colaboradores" name="idColaborador">
+            <%for (Colaborador colaborador : colaboradores) {%>
+                <option value="<%=colaborador.getId()%>" <%=asignacionTurno.getColaborador() != null && asignacionTurno.getColaborador().equals(colaborador) ? "selected" : "" %>> <%=colaborador.getNombre()%></option>
+            <%}%>
         </select>
     </p>
     <p>
-        <label for="input_num_voluntarios">Hora Fin</label>
+        <label for="input_num_voluntarios">Numero de voluntarios: </label>
         <input id="input_num_voluntarios" type="number" name="numVoluntarios" value="<%=asignacionTurno.getNumVoluntarios() != null ? asignacionTurno.getNumVoluntarios() : ""%>">
     </p>
     <p>
@@ -47,6 +60,8 @@
         <br>
         <textarea id="input_observaciones" name="observaciones" rows="5" cols="30"><%=asignacionTurno.getObservaciones() != null ? asignacionTurno.getObservaciones() : ""%></textarea>
     </p>
+    <button type="submit">Guardar</button>
 </form>
+</div>
 </body>
 </html>

@@ -1,8 +1,6 @@
 package com.leftjoiners.bancosol.proyectobackend.controller;
 
-import com.leftjoiners.bancosol.proyectobackend.dao.AsignacionColaboradoresRepository;
-import com.leftjoiners.bancosol.proyectobackend.dao.TiendaCampanyaRepository;
-import com.leftjoiners.bancosol.proyectobackend.dao.TipoTurnoRepository;
+import com.leftjoiners.bancosol.proyectobackend.dao.*;
 import com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno;
 import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya;
 import com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -26,7 +25,11 @@ public class AsignacionColaboradoresController {
     @Autowired
     protected TipoTurnoRepository tipoTurnoRepository;
 
+    @Autowired
+    protected ColaboradoresRespository colaboradoresRespository;
 
+    @Autowired
+    protected AsignacionTurnoRepository asignacionTurnoRepository;
 
     @GetMapping("/")
     public String doInit(Model model) {
@@ -81,7 +84,33 @@ public class AsignacionColaboradoresController {
             asignacionTurno.setTipoTurno(this.tipoTurnoRepository.findById(turno).orElse(null));
         }
 
+        model.addAttribute("colaboradores", this.colaboradoresRespository.findAll());
         model.addAttribute("asignacionTurno", asignacionTurno);
         return "formulario_turno";
+    }
+
+    @PostMapping("/guardarTurno")
+    public String guardarTurno(@RequestParam(value = "id", required = false) Integer id,
+                               @RequestParam("tiendaCampanyaId") Integer tiendaCampanyaId,
+                               @RequestParam("tipoTurnoId") Integer tipoTurnoId,
+                               @RequestParam("lineal") Integer lineal,
+                               @RequestParam("idColaborador") Integer idColaborador,
+                               @RequestParam("horaInicio") LocalTime horaInicio,
+                               @RequestParam("horaFin") LocalTime horaFin,
+                               @RequestParam("numVoluntarios") Integer numVoluntarios,
+                               @RequestParam("observaciones") String observaciones) {
+        AsignacionTurno asignacionTurno = new AsignacionTurno();
+        asignacionTurno.setId(id);
+        asignacionTurno.setTiendaCampanya(tiendaCampanyaRepository.findById(tiendaCampanyaId).orElse(null));
+        asignacionTurno.setLineal(lineal);
+        asignacionTurno.setTipoTurno(this.tipoTurnoRepository.findById(tipoTurnoId).orElse(null));
+        asignacionTurno.setColaborador(this.colaboradoresRespository.findById(idColaborador).orElse(null));
+        asignacionTurno.setHoraInicio(horaInicio);
+        asignacionTurno.setHoraFin(horaFin);
+        asignacionTurno.setNumVoluntarios(numVoluntarios);
+        asignacionTurno.setObservaciones(observaciones);
+        this.asignacionTurnoRepository.save(asignacionTurno);
+
+        return "redirect:/";
     }
 }

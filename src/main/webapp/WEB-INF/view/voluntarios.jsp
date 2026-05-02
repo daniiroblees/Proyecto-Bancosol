@@ -11,8 +11,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
   <body>
   <%
     List<VistaAsignacionColaboradores> tiendas = (List<VistaAsignacionColaboradores>) request.getAttribute("asignacionColaboradores");
-
-
   %>
     <h1>Asignación de voluntarios</h1>
   <main>
@@ -38,10 +36,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <td><%= tienda.getDomicilio() %> </td>
           <td><%= tienda.getLocalidad() %></td>
           <td><%= tienda.getCapitan() %> </td>
-          <td><%= tienda.getViernesManana() != null ? tienda.getViernesManana() : "" %></td>
-          <td><%= tienda.getViernesTarde() != null ? tienda.getViernesTarde() : ""  %></td>
-          <td><%= tienda.getSabadoManana() != null ? tienda.getSabadoManana() : ""  %></td>
-          <td><%= tienda.getSabadoTarde() != null ? tienda.getSabadoTarde() : "" %></td>
+          <td class="small-td"><%= tienda.getViernesManana() != null ? tienda.getViernesManana().replaceAll("\\s+(L\\d+)", "<br>$1") : "" %></td>
+          <td class="small-td"><%= tienda.getViernesTarde() != null ? tienda.getViernesTarde().replaceAll("\\s+(L\\d+)", "<br>$1") : ""  %></td>
+          <td class="small-td"><%= tienda.getSabadoManana() != null ? tienda.getSabadoManana().replaceAll("\\s+(L\\d+)", "<br>$1") : ""  %></td>
+          <td class="small-td"><%= tienda.getSabadoTarde() != null ? tienda.getSabadoTarde().replaceAll("\\s+(L\\d+)", "<br>$1") : "" %></td>
         </tr>
       <%
         }
