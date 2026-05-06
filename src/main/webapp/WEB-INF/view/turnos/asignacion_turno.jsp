@@ -18,10 +18,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
 <div class="page-wrapper">
 
   <div class="left-column">
-
-
     <div class="table-container card">
-      <table>
+      <table class="modernTable">
         <thead>
         <tr>
           <th>Tienda</th>

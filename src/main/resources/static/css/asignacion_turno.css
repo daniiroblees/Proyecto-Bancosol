@@ -43,67 +43,6 @@
 	color: var(--text-dark);
 }
 
-/* ============================
-   ESTILOS DE LA TABLA
-   ============================ */
-.table-container {
-	overflow-y: auto; /* Scroll interno para la tabla */
-	padding: 0; /* Sin padding para que la cabecera llegue al borde */
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	text-align: left;
-}
-
-thead {
-	background-color: var(--primary-blue);
-	color: white;
-	position: sticky;
-	top: 0;
-	z-index: 10;
-}
-
-th, td {
-	padding: 14px 15px;
-	border-bottom: 1px solid var(--border-color);
-}
-
-th {
-	font-weight: 500;
-	font-size: 0.85rem;
-}
-
-tbody tr {
-	transition: background 0.2s;
-	cursor: pointer;
-	background-color: var(--bg-white);
-}
-
-tbody tr:hover {
-	background-color: var(--bg-main);
-}
-
-/* Estilo para la fila seleccionada */
-tbody tr.selected {
-	background-color: #f0f7ff;
-	border-left: 4px solid var(--primary-blue);
-}
-
-.font-medium {
-	font-weight: 500;
-}
-
-.text-blue {
-	color: var(--accent-blue);
-}
-
-.small-td {
-	font-size: 0.8rem;
-	color: var(--text-muted);
-}
-
 .side-panel {
 	width: 400px; /* Ancho fijo para que su contenido interno no se aplaste durante la animación */
 	height: 100%;
@@ -120,7 +59,6 @@ tbody tr.selected {
 	gap: 20px;
 }
 
-/* Título de la tienda en el panel derecho */
 #lbl-tienda {
 	font-size: 1.3rem;
 	font-weight: 600;
@@ -134,7 +72,7 @@ tbody tr.selected {
 	margin: 0;
 }
 
-/* Selector de horarios (Radio buttons) */
+/* Selector de horarios */
 #volunteer-schedule, #volunteer-lineal {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -153,7 +91,6 @@ tbody tr.selected {
 	cursor: pointer;
 }
 
-/* Info del capitán y horas */
 #volunteer-info {
 	border: 1px solid var(--border-color);
 	border-radius: 8px;
@@ -193,9 +130,8 @@ tbody tr.selected {
 	color: var(--text-muted);
 }
 
-/* Botones inferiores */
 #button-container {
-	margin-top: auto; /* Empuja los botones al fondo del panel */
+	margin-top: auto;
 	display: flex;
 	gap: 10px;
 	padding-top: 20px;
@@ -210,14 +146,35 @@ tbody tr.selected {
 	transition: all 0.2s;
 }
 
-#create-button { background-color: var(--primary-blue); color: white; border: none; }
-#create-button:hover { background-color: #002244; }
+#create-button {
+	background-color: var(--primary-blue);
+	color: white;
+	border: none;
+}
 
-#export-button { background-color: var(--bg-white); color: var(--primary-blue); border: 1px solid var(--primary-blue); }
-#export-button:hover { background-color: var(--bg-main); }
+#create-button:hover {
+	background-color: #002244;
+}
 
-#cancel-button { background-color: var(--bg-white); color: var(--status-red); border: 1px solid var(--status-red); }
-#cancel-button:hover { background-color: #fef2f2; }
+#export-button {
+	background-color: var(--bg-white);
+	color: var(--primary-blue);
+	border: 1px solid var(--primary-blue);
+}
+
+#export-button:hover {
+	background-color: var(--bg-main);
+}
+
+#cancel-button {
+	background-color: var(--bg-white);
+	color: var(--status-red);
+	border: 1px solid var(--status-red);
+}
+
+#cancel-button:hover {
+	background-color: #fef2f2;
+}
 
 
 
