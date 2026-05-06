@@ -37,7 +37,6 @@
             <p><%=colaborador.getObservaciones() != null && !colaborador.getObservaciones().isEmpty() ? colaborador.getObservaciones() : "Sin observaciones."%></p>
         </div>
     </div>
-    <jsp:include page="buttons-colaboradores.jsp"/>
 </div>
 </body>
 </html>

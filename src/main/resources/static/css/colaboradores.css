@@ -20,6 +20,7 @@
     overflow: hidden;
     /* Esta es la magia: una transición de 0.3 segundos muy fluida */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none;
 }
 
 /* Esta clase se la pondremos con JavaScript cuando queramos abrirlo */
@@ -27,6 +28,8 @@
     width: 400px;
     margin-left: 25px; /* Separación con la tabla */
     opacity: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Encabezado sobre la tabla */

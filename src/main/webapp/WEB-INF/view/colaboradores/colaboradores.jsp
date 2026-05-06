@@ -60,6 +60,7 @@
         <div class="right-column">
             <div id="info-container" class="card side-panel">
             </div>
+            <jsp:include page="buttons-colaboradores.jsp"/>
         </div>
     </div>
 </main>
