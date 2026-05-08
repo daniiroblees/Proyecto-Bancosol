@@ -2,6 +2,7 @@ package com.leftjoiners.bancosol.proyectobackend.controller;
 
 import com.leftjoiners.bancosol.proyectobackend.dao.*;
 import com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno;
+import com.leftjoiners.bancosol.proyectobackend.entity.Colaborador;
 import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya;
 import com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,9 @@ public class AsignacionTurnoController {
                               Model model) {
         TiendaCampanya tienda = tiendaCampanyaRepository.findById(id).orElse(null);;
         AsignacionTurno asignacionTurno = this.asignacionTurnoRepository.buscarTurnoEspecifico(id, turno, lineal).orElse(null);
+        Colaborador colaborador = null;
+
+        if (asignacionTurno != null) colaborador = asignacionTurno.getColaborador();
 
         if (asignacionTurno == null) {
             asignacionTurno = new AsignacionTurno();
@@ -77,6 +81,7 @@ public class AsignacionTurnoController {
         }
 
         model.addAttribute("colaboradores", this.colaboradoresRespository.findAll());
+        model.addAttribute("colaborador", colaborador);
         model.addAttribute("asignacionTurno", asignacionTurno);
         model.addAttribute("currentSection", "turnos");
         return "turnos/formulario_turno";
@@ -105,5 +110,14 @@ public class AsignacionTurnoController {
         this.asignacionTurnoRepository.save(asignacionTurno);
 
         return "redirect:/turnos";
+    }
+
+    @PostMapping("/buscarColaborador")
+    public String buscarColaborador(@RequestParam("id") Integer id, Model model) {
+        Colaborador colaborador = this.colaboradoresRespository.findById(id).get();
+
+        model.addAttribute("colaborador", colaborador);
+
+        return "colaboradores/info_colaboradores";
     }
 }

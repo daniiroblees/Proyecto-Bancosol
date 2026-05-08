@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/css/voluntarios.css" />
+    <link rel="stylesheet" href="/css/colaboradores.css" />
 </head>
 <body>
 <%Colaborador colaborador = (Colaborador) request.getAttribute("colaborador");%>

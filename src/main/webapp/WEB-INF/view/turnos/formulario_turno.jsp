@@ -20,6 +20,7 @@
 <body class="formulario-turno-page">
 
 <jsp:include page="../shared/navbar.jsp"/>
+<div style="display: flex; flex-direction: row" >
     <div class="form-turno">
         <div class="turno-info">
             <div class="turno-info-row">
@@ -41,7 +42,7 @@
             <div class="form-group">
                 <label for="input_colaboradores">Colaborador:</label>
                 <select id="input_colaboradores" name="idColaborador">
-                    <option value="">Seleccione un colaborador...</option>
+                    <option value="0">Seleccione un colaborador...</option>
                     <%for (Colaborador colaborador : colaboradores) {%>
                     <option value="<%=colaborador.getId()%>" <%=asignacionTurno.getColaborador() != null && asignacionTurno.getColaborador().equals(colaborador) ? "selected" : "" %>>
                         <%=colaborador.getNombre()%>
@@ -78,5 +79,40 @@
             <button type="submit" class="btn-submit">Guardar Turno</button>
         </form>
     </div>
+    <div id="colaborador_container">
+        <jsp:include page="../colaboradores/info_colaboradores.jsp"/>
+    </div>
+</div>
 </body>
+<script>
+    const colaboradorContainer = document.querySelector("#colaborador_container");
+    const inputColaboradores = document.querySelector("#input_colaboradores");
+    let colaboradorActual = inputColaboradores.value;
+
+    function fetchColaboradorData() {
+        if (colaboradorActual == 0) {
+            colaboradorContainer.innerHTML = "";
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append("id", colaboradorActual);
+
+        fetch("/turnos/buscarColaborador", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: params.toString()
+        })
+            .then(response => response.text())
+            .then(html => {colaboradorContainer.innerHTML = html})
+            .catch(error => console.error("Error:", error));
+    }
+
+    inputColaboradores.addEventListener("change", (e) => {
+        colaboradorActual = e.target.value;
+        fetchColaboradorData();
+    })
+</script>
 </html>
