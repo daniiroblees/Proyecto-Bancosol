@@ -15,7 +15,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
   %>
 <jsp:include page="../shared/navbar.jsp"/>
 
-<div class="page-wrapper">
+<main class="page-wrapper">
 
   <div class="left-column">
     <div class="table-container card">
@@ -54,8 +54,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <div id="info-container" class="card side-panel">
     </div>
   </div>
+</main>
 
-</div>
+  <jsp:include page="../shared/footer.jsp"/>
+
   <script>
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
